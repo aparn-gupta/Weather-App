@@ -27,10 +27,18 @@ interface LocalityWeatherData
 
   const [latitude, setLatitude] = useState<string>("")
   const [longitude, setLongitude] = useState<string>("")
+  const [dataLoaded, setDataLoaded] = useState<boolean>(false)
 
 
   const [suggestions, setSuggestions] = useState<string[]>([])
-  const [localityWeatherData, setlocalityWeatherData] = useState(null)
+  const [localityWeatherData, setlocalityWeatherData] = useState<LocalityWeatherData>({
+    temperature: 0,
+    humidity: 0,
+    wind_speed: 0,
+    wind_direction: 0,
+    rain_intensity: 0,
+    rain_accumulation: 0,
+});
 
   const [searchingByCoordinates, setSearchingByCoordinates] = useState<boolean>(false)
   const [searchResultsShowing, setSearchResultsShowing] = useState<boolean>(false)
@@ -97,8 +105,7 @@ interface LocalityWeatherData
       
     })
     setSuggestions(matchingPlaces)
-    // setIsOpen(true)
-
+   
   }
   
 
@@ -118,11 +125,11 @@ interface LocalityWeatherData
     })
 
     const weatherData = res.data
+    setPlaceNameinResults("")  
     setlocalityWeatherData(weatherData.locality_weather_data)
+    setDataLoaded(true)
     
-    // setUserInput("")
-
-    // console.log(weatherData)
+   
 
   }
 
@@ -179,13 +186,12 @@ const handleStatus = (errStatus: any) => {
       const weatherData2 = response.data  
       
       setlocalityWeatherData(weatherData2.locality_weather_data)
-     
+      setDataLoaded(true)
 
-      
+      setSearchingByCoordinates(false)
       setSuggestions([]) 
-      setSearchingByCoordinates(prev => !prev)
-      // setLatitude("")
-      // setLongitude("")
+      
+    
      
     }
     catch (err : any) {
@@ -217,6 +223,8 @@ const handleStatus = (errStatus: any) => {
     setUserInput(placeName)
     setPlaceNameinResults(placeName)  
     
+   
+    
 
   }
 
@@ -233,7 +241,7 @@ const handleStatus = (errStatus: any) => {
 
  <div className=" w-11/12 md:w-1/2 bg-blue-900 text-white p-8 rounded-md  shadow-2xl">  
 
-{ localityWeatherData ?  <Info temperature = { localityWeatherData.temperature  } 
+{ dataLoaded ?  <Info temperature = { localityWeatherData.temperature  } 
     humidity = { localityWeatherData.humidity  } 
     windSpeed = { localityWeatherData.wind_speed  } 
     rainAccumulation =  { localityWeatherData.rain_accumulation  }
