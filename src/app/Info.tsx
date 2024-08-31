@@ -15,10 +15,10 @@ const Info: React.FC<InfoProps> = ({temperature, humidity, windSpeed, rainAccumu
 
 //check icons
   return (
-    <div className=' bg-blue-900 text-white p-8 rounded-md'>
+    <div className='  '>
     <div className='flex justify-center'>
    <div>
-   <p className=" text-6xl font-bold ">  {temperature} &deg;C </p>
+   {temperature ? <p className=" text-6xl font-bold text-center ">{temperature}&deg;C </p> : <p className=" text-6xl font-bold text-center"> Data N/A </p>}
    <p className=" text-xl font-bold text-center mt-4">  {place} </p>
    </div>
   
@@ -32,8 +32,8 @@ const Info: React.FC<InfoProps> = ({temperature, humidity, windSpeed, rainAccumu
     <div className=' w-full'>
    <div>
    <div className='flex justify-between w-full text-xl'>
-     <div className="flex h-20">  <img  src=' https://cdn-icons-png.flaticon.com/512/1779/1779817.png ' alt='humidity-icon' className='w-12 h-12'/> <p className='mt-4 ml-4 text-sm'> Humidity: <span className='text-lg font-bold'>{ humidity ?  `${humidity}%` : "Data N/A"}</span> </p> </div>
-   <div className="flex h-20"> <img  src='https://www.fpl.com/content/dam/fplgp/us/en/icons/air-blue-icon.png' alt='windspeed-icon' className='w-12 h-12 mt-4'/> <p className='mt-4 ml-4 text-sm'> Wind Speed :  <span className='text-lg font-bold' >{windSpeed ? `${windSpeed}Km/h` : "Data N/A"}</span>  </p> </div>
+     <div className="flex h-20">  <img  src=' https://cdn-icons-png.flaticon.com/512/1779/1779817.png ' alt='humidity-icon' className='w-12 h-12 '/> <p className='mt-4 ml-4 text-sm'> Humidity: <span className='text-lg font-bold'>{ humidity ?  `${humidity}%` : "Data N/A"}</span> </p> </div>
+   <div className="flex h-20"> <img  src='https://www.fpl.com/content/dam/fplgp/us/en/icons/air-blue-icon.png' alt='windspeed-icon' className='w-12 h-12 mt-4 '/> <p className='mt-4 ml-4 text-sm'> Wind Speed :  <span className='text-lg font-bold' >{windSpeed ? `${windSpeed}Km/h` : "Data N/A"}</span>  </p> </div>
    </div>
   
      <div className='w-full flex justify-center mt-6'>
