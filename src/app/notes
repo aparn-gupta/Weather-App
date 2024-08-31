@@ -98,6 +98,24 @@
 
 
 
+// let placeWithCity = []
+// let myArray = []
+// for (let each of localities) {
+//   for (let every of matchingPlaces) {
+//     if (each.localityName === every) {
+//       placeWithCity.push(every, each.cityName)
+//       myArray.push(placeWithCity)
+
+//     }
+
+//   }
+// }
+
+
+//   setSuggestions(placeWithCity)
+ 
+// }
+  
 
 
 
