@@ -16,19 +16,14 @@ const Info: React.FC<InfoProps> = ({temperature, humidity, windSpeed, rainAccumu
 //check icons
   return (
     <div className='  '>
-    <div className='flex justify-center'>
+    <div className='flex justify-center pt-8'>
    <div>
    {temperature ? <p className=" text-5xl  md:text-7xl font-bold text-center ">{temperature}&deg;C </p> : <p className="  text-5xl  md:text-7xl font-bold text-center"> Data N/A </p>}
    <p className=" text-2xl md:text-4xl font-bold text-center mt-2 md:mt-4">  {place} </p>
    </div>
-  
-   
-
 
     </div>
-   
-  
-
+ 
     <div className=' w-full h-full  md:pt-16 lg:pt-16 flex justify-center '>
    <div className = " w-full md:w-11/12 lg:w-4/5">
    <div className='flex justify-between w-full text-lg md:text-2xl'>
@@ -39,18 +34,14 @@ const Info: React.FC<InfoProps> = ({temperature, humidity, windSpeed, rainAccumu
      <div className='w-full flex justify-center pt-2 md:pt-20 lg:pt-6'>
 
       <div className='w-11/12 lg:w-4/5 md:flex md:justify-between text-base md:text-xl'>
-      <div className="flex h-10 md:h-20"> <img  src='https://cdn-icons-png.flaticon.com/512/1229/1229469.png' alt='rain-intensity-icon' className='w-8 h-8 mt-4'/>  <p className=' text-base mt-6 ml-2 '> Rain Intensity:  <span className=' font-bold text-xl '>{ rainIntensity ?  `${rainIntensity}mm/h` :  "Data N/A" }</span> </p> </div>
+      <div className="flex h-10 md:h-20 lg:h-10"> <img  src='https://cdn-icons-png.flaticon.com/512/1229/1229469.png' alt='rain-intensity-icon' className='w-8 h-8 mt-4'/>  <p className=' text-base mt-6 ml-2 '> Rain Intensity:  <span className=' font-bold text-xl '>{ rainIntensity ?  `${rainIntensity}mm/h` :  "Data N/A" }</span> </p> </div>
 
-      <div className="flex h-10 md:h-20"> <img  src='https://creazilla-store.fra1.digitaloceanspaces.com/icons/3230466/accumulation-rain-icon-md.png' alt='rain-accumulation-icon' className='w-8 h-8 mt-4'/>  <p className='mt-6 ml-2 text-base'>  Rain Accumulation: <span className=' font-bold'>{rainAccumulation ? `${rainAccumulation}mm` : "Data N/A" }</span> </p> </div>
-      </div>
-     
-
-
-
-
-
+      <div className="flex h-10 md:h-20 lg:h-10"> <img  src='https://creazilla-store.fra1.digitaloceanspaces.com/icons/3230466/accumulation-rain-icon-md.png' alt='rain-accumulation-icon' className='w-8 h-8 mt-4'/>  <p className='mt-6 ml-2 text-base'>  Rain Accumulation: <span className='text-xl font-bold'>{rainAccumulation ? `${rainAccumulation}mm` : "Data N/A" }</span> </p> </div>
+      </div>    
 
    </div>
+
+   <div className=" ml-3 md:ml-0 flex h-8 md:h-20 mt-2 md:mt-8 lg:mt-3 lg:h-10 md:justify-center"> <img  src='https://cdn0.iconfinder.com/data/icons/weather-166/512/b51_3-512.png' alt='wind-direction-icon' className='w-12 h-12 mt-4'/>  <p className='mt-6 ml-2 text-base'>  Wind Direction: {windDirection ? <span className='text-xl font-bold'>{windDirection}&deg;</span> : <span className='font-bold'>Data N/A</span> } </p> </div>
     </div>
 
     </div>

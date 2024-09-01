@@ -5,10 +5,7 @@ import axios from "axios";
 import { localities } from "./localities";
 import { useState } from "react";
 import Info from "./Info";
-import { useEffect, useRef } from "react";
-
-
-
+import { match } from "assert";
 
 
 export default function Home() {
@@ -32,7 +29,7 @@ interface LocalityWeatherData
   const [dataLoaded, setDataLoaded] = useState<boolean>(false)
 
 
-  const [suggestions, setSuggestions] = useState<string[] | null>(null)
+  const [suggestions, setSuggestions] = useState<string[][] | null>(null)
   const [localityWeatherData, setlocalityWeatherData] = useState<LocalityWeatherData>({
     temperature: 0,
     humidity: 0,
@@ -47,17 +44,12 @@ interface LocalityWeatherData
 
   const [placeNameinResults, setPlaceNameinResults] = useState<string>("")
 
-  const [loading, setLoading] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState<JSX.Element | string>("")
 
   const [showSuggestions, setShowSuggestions] = useState<boolean>(true)
 
  
-    const loader = <img src="https://th.bing.com/th/id/R.1e936fb298403d433b9831edb3b106b9?rik=Wjbt5gJd2xg40Q&riu=http%3a%2f%2fclipart-library.com%2fimages_k%2fsun-with-transparent-background%2fsun-with-transparent-background-20.png&ehk=yrmVQI624CWIh64pXelfY5RK2fWw9uk7NivXVeiVjyg%3d&risl=&pid=ImgRaw&r=0" className="w-24 h-24 animate-spin" />
-
- 
-
-
+  const loader = <img src="https://th.bing.com/th/id/R.1e936fb298403d433b9831edb3b106b9?rik=Wjbt5gJd2xg40Q&riu=http%3a%2f%2fclipart-library.com%2fimages_k%2fsun-with-transparent-background%2fsun-with-transparent-background-20.png&ehk=yrmVQI624CWIh64pXelfY5RK2fWw9uk7NivXVeiVjyg%3d&risl=&pid=ImgRaw&r=0" className="w-24 h-24 animate-spin" />
 
   const handleSearchbyPlaceNameBtn = () => {
     setSearchingByCoordinates(false)
@@ -79,44 +71,74 @@ interface LocalityWeatherData
 
   
 
-      setSearchResultsShowing(true)
+    setSearchResultsShowing(true)
       
-      fetchWeatherbyCoordinates(latitude, longitude)
+    fetchWeatherbyCoordinates(latitude, longitude)
+
+  }
+
+
+
+
+//  const allLocalities: string[] = []
+//   let localityPlusCity
+//  for (let each of localities) {
+ 
+//     localityPlusCity = each.localityName 
+  
+//   allLocalities.push(localityPlusCity)
+//  }
+
+//   const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+//     setShowSuggestions(true)
+   
+//     setUserInput(e.target.value)
+//     const matchingPlaces = allLocalities.filter((option) => {
+//       return option.toLowerCase().startsWith(userInput.toLowerCase())
       
-     
-      
+//     })
+//     setSuggestions(matchingPlaces)
+   
+//   }
+
+
+const allLocalities: string[] = []
+let localityPlusCity: string[][] = []
+
+for (let each of localities) {
+allLocalities.push(each.localityName)
+}
+
+const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+  setShowSuggestions(true)
+ 
+  setUserInput(e.target.value)
+  const matchingPlaces = allLocalities.filter((option) => {
+    return option.toLowerCase().startsWith(userInput.toLowerCase())
     
+  })
 
-      
 
-  }
 
- const allLocalities: string[] = []
-  let localityPlusCity
- for (let each of localities) {
+  for (let each of matchingPlaces) {
+    for (let every of localities) {
+      if (each === every.localityName) {
+        localityPlusCity.push([each, `,  ${every.cityName}`])
+        
+      }
+    }
+
+  } 
+
+
+
+  setSuggestions(localityPlusCity)
  
-      localityPlusCity = each.localityName 
-  
-  allLocalities.push(localityPlusCity)
- }
+}
 
 
 
 
-  const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-    setShowSuggestions(true)
-   
-    setUserInput(e.target.value)
-    const matchingPlaces = allLocalities.filter((option) => {
-      return option.toLowerCase().startsWith(userInput.toLowerCase())
-      
-    })
-    setSuggestions(matchingPlaces)
-   
-  }
-  
-
- 
 
 
   const fetchWeatherbyCoordinates = async (latitude: string, longitude: string) => {
@@ -135,9 +157,6 @@ interface LocalityWeatherData
     setPlaceNameinResults("")  
     setDataLoaded(true)
     setlocalityWeatherData(weatherData.locality_weather_data)
-   
-    
-   
 
   }
 
@@ -232,8 +251,6 @@ const handleStatus = (errStatus: any) => {
     setUserInput(placeName)
     setPlaceNameinResults(placeName)  
     
-   
-    
 
   }
 
@@ -248,7 +265,7 @@ const handleStatus = (errStatus: any) => {
   <img src="https://i.gifer.com/origin/45/454ba38b4ce5b3fdc8796ed710769e69.gif"  className="h-screen w-screen absolute top-0 left-0 object-cover" />
   <div className=" w-screen h-screen absolute top-0 left-0 flex justify-center flex-col items-center" >
 
- <div className=" grey-transparent w-11/12 h-5/6 maxheight text-white p-3 lg:p-8  pt-56 md:pt-56 lg:pt-36 rounded-md  shadow-2xl">  
+ <div className=" grey-transparent w-11/12 custom-height  text-white p-3 lg:p-8  pt-56 md:pt-56 lg:pt-36 rounded-md  shadow-2xl">  
 
 { dataLoaded ?  <Info temperature = { localityWeatherData.temperature  } 
     humidity = { localityWeatherData.humidity  } 
@@ -265,7 +282,7 @@ const handleStatus = (errStatus: any) => {
  </div>
 
 <div className= {`${searchResultsShowing ? "flex justify-center" : "w-screen"}`} >  
-<div className=  {`  flex justify-center  ${searchResultsShowing ? "lg:max-h-28   lg:py-8 pt-6 md:pt-12 lg:pt-2  absolute top-16  py-3 px-2 lg:px-8 w-11/12 border-b border-spacing-2" : " bg-white w-screen lg:flex-col lg:items-center h-screen mt-20 lg:mt-0" }`}      > 
+<div className=  {`  flex justify-center  ${searchResultsShowing ? "lg:max-h-28   lg:py-8 pt-6 md:pt-12 lg:pt-2  absolute top-16  py-3 px-2 lg:px-8 w-11/12 lg:border-b border-spacing-2" : " bg-white w-screen lg:flex-col lg:items-center h-screen mt-20 lg:mt-0" }`}      > 
   <div  className= {`${searchResultsShowing ? "  w-5/6 lg:w-full lg:flex lg:justify-start"  : "w-5/6 lg:w-auto"}`} >
  
 
@@ -278,12 +295,10 @@ const handleStatus = (errStatus: any) => {
   <input className= {`font-bold rounded-3xl p-2.5 outline-0 hover:shadow-md border border-zinc-300 ${searchResultsShowing ? " w-28  md:w-52 lg:w-5/12 mt-3" : "w-5/12"}`}  placeholder="Longitude"  type="text" name= "longitude" value={longitude} onChange={(e) => setLongitude(e.target.value)}/>
     
       </div>
- 
- 
- 
+
 <div className= {`${showSuggestions? "block w-full" : "hidden" }`}>
 {suggestions &&  <div className= "p-4 overflow-y-scroll max-h-64  rounded-3xl bg-white flex  justify-between w-full">
-   <div>   {  suggestions.map((item: string, i ) => <div key={i} className="hover:bg-slate-400 flex justify-center w-full" onClick={ () =>  {fetchWeatherfromUserInput(item)
+   <div>   {  suggestions.map((item: string[], i ) => <div key={i} className="hover:bg-slate-400 flex justify-center w-full" onClick={ () =>  {fetchWeatherfromUserInput(item[0])
   
 }} > <div className="w-full hover:bg-slate-400">  {item} </div> </div>)}  
  
@@ -293,14 +308,7 @@ const handleStatus = (errStatus: any) => {
  
   </div>}
 </div>
-
-
-  
-
-
-    
-    
-    
+   
 </div>
 
   <div className=  {` lg:max-h-12 flex w-full text-sm lg:text-base  ${searchResultsShowing?  "mt-6 md:mt-3 lg:justify-end" : "mt-8 justify-center" }`} > 

@@ -12,9 +12,7 @@
 }
 
 
-@media (min-width: 1023px) {
-    .maxheight {
-        max-height: 750px;
-    }
-    
+.custom-height {
+    height : 92%
 }
+
