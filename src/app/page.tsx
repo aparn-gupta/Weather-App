@@ -32,7 +32,7 @@ interface LocalityWeatherData
   const [dataLoaded, setDataLoaded] = useState<boolean>(false)
 
 
-  const [suggestions, setSuggestions] = useState<string[]>([])
+  const [suggestions, setSuggestions] = useState<string[] | null>(null)
   const [localityWeatherData, setlocalityWeatherData] = useState<LocalityWeatherData>({
     temperature: 0,
     humidity: 0,
@@ -67,6 +67,7 @@ interface LocalityWeatherData
 
   const ShowCheckWeatherBtn =  () => {
     setSearchingByCoordinates(prev => !prev)
+    setShowSuggestions(false)
 
   }
 
@@ -74,7 +75,7 @@ interface LocalityWeatherData
   const handleSearchbyCoordinatesBtn = () => {
 
  
-    setSuggestions([])
+    setSuggestions(null)
 
   
 
@@ -196,7 +197,7 @@ const handleStatus = (errStatus: any) => {
      
 
       setSearchingByCoordinates(false)
-      setSuggestions([]) 
+      setSuggestions(null) 
       
     
      
@@ -247,7 +248,7 @@ const handleStatus = (errStatus: any) => {
   <img src="https://i.gifer.com/origin/45/454ba38b4ce5b3fdc8796ed710769e69.gif"  className="h-screen w-screen absolute top-0 left-0 object-cover" />
   <div className=" w-screen h-screen absolute top-0 left-0 flex justify-center flex-col items-center" >
 
- <div className=" grey-transparent w-11/12 h-5/6 text-white p-3 lg:p-8  pt-56 md:pt-72 lg:pt-36 rounded-md  shadow-2xl">  
+ <div className=" grey-transparent w-11/12 h-5/6 maxheight text-white p-3 lg:p-8  pt-56 md:pt-56 lg:pt-36 rounded-md  shadow-2xl">  
 
 { dataLoaded ?  <Info temperature = { localityWeatherData.temperature  } 
     humidity = { localityWeatherData.humidity  } 
@@ -264,14 +265,14 @@ const handleStatus = (errStatus: any) => {
  </div>
 
 <div className= {`${searchResultsShowing ? "flex justify-center" : "w-screen"}`} >  
-<div className=  {`  flex justify-center  ${searchResultsShowing ? "h-48 md:h-56 lg:h-24 pt-6 md:pt-12 lg:pt-2 bg-transparent absolute top-16  py-3 px-2 lg:px-8 w-11/12 border-b border-spacing-2" : " bg-white w-screen lg:flex-col lg:items-center h-screen mt-20 lg:mt-0" }`}      > 
-  <div  className= {`${searchResultsShowing ? "  w-3/5 lg:w-full lg:flex lg:justify-start"  : "w-5/6 lg:w-auto"}`} >
+<div className=  {`  flex justify-center  ${searchResultsShowing ? "lg:max-h-28   lg:py-8 pt-6 md:pt-12 lg:pt-2  absolute top-16  py-3 px-2 lg:px-8 w-11/12 border-b border-spacing-2" : " bg-white w-screen lg:flex-col lg:items-center h-screen mt-20 lg:mt-0" }`}      > 
+  <div  className= {`${searchResultsShowing ? "  w-5/6 lg:w-full lg:flex lg:justify-start"  : "w-5/6 lg:w-auto"}`} >
  
 
-  <div onClick={() => {setSearchResultsShowing(false)}}  className={`font-bold  flex  ${searchResultsShowing ? " text-2xl md:text-4xl w-4/5 md:w-2/3 lg:w-1/5 lg:text-3xl mt-3 justify-center lg:justify-start bg-white rounded-3xl lg:px-5 lg:pt-2.5" : "text-2xl lg:text-8xl   justify-center" }`}> <p className="text-blue-600"> L </p>  <p className="text-red-500"> i </p> <p className="text-yellow-500"> v </p> <p className="text-blue-600"> e </p> <p className={`text-green-600 ml-1.5   ${searchResultsShowing ? "md:ml-1.5" : " md:ml-4"}`}> W </p> <p className="text-red-500"> e </p> <p className="text-yellow-500"> a </p> <p className="text-blue-600"> t </p> <p className="text-red-500"> h </p > <p className="text-green-600"> e </p> <p className="text-yellow-500"> r </p> </div>
+  <div onClick={() => {setSearchResultsShowing(false)}}  className={`font-bold  flex  ${searchResultsShowing ? " text-2xl  lg:text-3xl mt-3 justify-center lg:justify-start lg:bg-white max-h-16 px-3 lg:pt-2.5" : "text-2xl lg:text-8xl   justify-center" }`}> <div className= {`flex justify-center lg:justify-normal ${searchResultsShowing ? "md:text-4xl w-2/3 md:w-1/2 lg:w-1/4 bg-white text-center" : "" }`}> <p className="text-blue-600"> L </p>  <p className="text-red-500"> i </p> <p className="text-yellow-500"> v </p> <p className="text-blue-600"> e </p> <p className={`text-green-600 ml-1.5   ${searchResultsShowing ? "md:ml-1.5" : " md:ml-4"}`}> W </p> <p className="text-red-500"> e </p> <p className="text-yellow-500"> a </p> <p className="text-blue-600"> t </p> <p className="text-red-500"> h </p > <p className="text-green-600"> e </p> <p className="text-yellow-500"> r </p> </div> </div>
 
-  <div className={`rounded-3xl  ${searchingByCoordinates ? "border-0"  :"border border-zinc-300 hover:shadow-md"  }   ${searchResultsShowing ? " w-full lg:ml-8  my-3 lg:my-0 ml-1 "  : "w-full  mt-6" }`}   >
-  <input className=   { `  w-full rounded-3xl px-3 pt-1 lg:pt-5 outline-0  hover:border-0 ${searchingByCoordinates ? "hidden" : "block" } ${searchResultsShowing ? "bg-transparent text-white font-bold" : "bg-white"} `}  type="text" value={userInput} onChange={handleChange} name = "userInputPlace" id = "userInput"  placeholder="Type Locality e.g. Brookefields"/>
+  <div className={`rounded-3xl  ${searchingByCoordinates ? "border-0"  :"border border-zinc-300 hover:shadow-md"  }   ${searchResultsShowing ? " w-full lg:ml-8 lg:mt-4 text-lg my-3 lg:my-0 ml-1 "  : "w-full  mt-6" }`}   >
+  <input className=   { `  w-full rounded-3xl px-3 pt-2 pb-2 lg:pt-3 outline-0  hover:border-0 ${searchingByCoordinates ? "hidden" : "block" } ${searchResultsShowing ? "bg-transparent text-white font-bold border border-white" : "bg-white"} `}  type="text" value={userInput} onChange={handleChange} name = "userInputPlace" id = "userInput"  placeholder="Type Locality e.g. Brookefields"/>
   <div className=  {`justify-between ${searchingByCoordinates ? "flex" : "hidden" } `} > 
   <input className= {` font-bold rounded-3xl p-2.5 outline-0 hover:shadow-md border border-zinc-300 ${searchResultsShowing ? " w-28 md:w-52 lg:w-5/12 mt-3" : "w-5/12"} `}  placeholder="Latitude"  type="text" name= "latitude" value={latitude} onChange={(e) => setLatitude(e.target.value)}/>
   <input className= {`font-bold rounded-3xl p-2.5 outline-0 hover:shadow-md border border-zinc-300 ${searchResultsShowing ? " w-28  md:w-52 lg:w-5/12 mt-3" : "w-5/12"}`}  placeholder="Longitude"  type="text" name= "longitude" value={longitude} onChange={(e) => setLongitude(e.target.value)}/>
@@ -281,7 +282,7 @@ const handleStatus = (errStatus: any) => {
  
  
 <div className= {`${showSuggestions? "block w-full" : "hidden" }`}>
-{suggestions &&  <div className= "p-2 overflow-y-scroll max-h-64  rounded-3xl bg-white flex  justify-between w-full">
+{suggestions &&  <div className= "p-4 overflow-y-scroll max-h-64  rounded-3xl bg-white flex  justify-between w-full">
    <div>   {  suggestions.map((item: string, i ) => <div key={i} className="hover:bg-slate-400 flex justify-center w-full" onClick={ () =>  {fetchWeatherfromUserInput(item)
   
 }} > <div className="w-full hover:bg-slate-400">  {item} </div> </div>)}  
