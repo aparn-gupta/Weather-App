@@ -5,7 +5,7 @@ import axios from "axios";
 import { localities } from "./localities";
 import { useState } from "react";
 import Info from "./Info";
-import { match } from "assert";
+
 
 
 export default function Home() {
@@ -48,6 +48,7 @@ interface LocalityWeatherData
 
   const [showSuggestions, setShowSuggestions] = useState<boolean>(true)
 
+
  
   const loader = <img src="https://th.bing.com/th/id/R.1e936fb298403d433b9831edb3b106b9?rik=Wjbt5gJd2xg40Q&riu=http%3a%2f%2fclipart-library.com%2fimages_k%2fsun-with-transparent-background%2fsun-with-transparent-background-20.png&ehk=yrmVQI624CWIh64pXelfY5RK2fWw9uk7NivXVeiVjyg%3d&risl=&pid=ImgRaw&r=0" className="w-24 h-24 animate-spin" />
 
@@ -66,7 +67,9 @@ interface LocalityWeatherData
 
   const handleSearchbyCoordinatesBtn = () => {
 
- 
+    
+
+
     setSuggestions(null)
 
   
@@ -78,28 +81,6 @@ interface LocalityWeatherData
   }
 
 
-
-
-//  const allLocalities: string[] = []
-//   let localityPlusCity
-//  for (let each of localities) {
- 
-//     localityPlusCity = each.localityName 
-  
-//   allLocalities.push(localityPlusCity)
-//  }
-
-//   const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-//     setShowSuggestions(true)
-   
-//     setUserInput(e.target.value)
-//     const matchingPlaces = allLocalities.filter((option) => {
-//       return option.toLowerCase().startsWith(userInput.toLowerCase())
-      
-//     })
-//     setSuggestions(matchingPlaces)
-   
-//   }
 
 
 const allLocalities: string[] = []
@@ -291,8 +272,8 @@ const handleStatus = (errStatus: any) => {
   <div className={`rounded-3xl  ${searchingByCoordinates ? "border-0"  :"border border-zinc-300 hover:shadow-md"  }   ${searchResultsShowing ? " w-full lg:ml-8 lg:mt-4 text-lg my-3 lg:my-0 ml-1 "  : "w-full  mt-6" }`}   >
   <input className=   { `  w-full rounded-3xl px-3 pt-2 pb-2 lg:pt-3 outline-0  hover:border-0 ${searchingByCoordinates ? "hidden" : "block" } ${searchResultsShowing ? "bg-transparent text-white font-bold border border-white" : "bg-white"} `}  type="text" value={userInput} onChange={handleChange} name = "userInputPlace" id = "userInput"  placeholder="Type Locality e.g. Brookefields"/>
   <div className=  {`justify-between ${searchingByCoordinates ? "flex" : "hidden" } `} > 
-  <input className= {` font-bold rounded-3xl p-2.5 outline-0 hover:shadow-md border border-zinc-300 ${searchResultsShowing ? " w-28 md:w-52 lg:w-5/12 mt-3" : "w-5/12"} `}  placeholder="Latitude"  type="text" name= "latitude" value={latitude} onChange={(e) => setLatitude(e.target.value)}/>
-  <input className= {`font-bold rounded-3xl p-2.5 outline-0 hover:shadow-md border border-zinc-300 ${searchResultsShowing ? " w-28  md:w-52 lg:w-5/12 mt-3" : "w-5/12"}`}  placeholder="Longitude"  type="text" name= "longitude" value={longitude} onChange={(e) => setLongitude(e.target.value)}/>
+  <input className= {` font-bold rounded-3xl p-2.5  outline-0 hover:shadow-md border border-zinc-300 ${searchResultsShowing ? " input-coordinates-width lg:w-5/12 " : "w-5/12"} `}  placeholder="Latitude"  type="text" name= "latitude" value={latitude} onChange={(e) => setLatitude(e.target.value)}/>
+  <input className= {`font-bold rounded-3xl p-2.5  outline-0 hover:shadow-md border border-zinc-300 ${searchResultsShowing ? "input-coordinates-width  lg:w-5/12  " : "w-5/12"}`}  placeholder="Longitude"  type="text" name= "longitude" value={longitude} onChange={(e) => setLongitude(e.target.value)}/>
     
       </div>
 
@@ -311,10 +292,10 @@ const handleStatus = (errStatus: any) => {
    
 </div>
 
-  <div className=  {` lg:max-h-12 flex w-full text-sm lg:text-base  ${searchResultsShowing?  "mt-6 md:mt-3 lg:justify-end" : "mt-8 justify-center" }`} > 
-    <button className={`bg-zinc-100 hover:border hover:border-zinc-300 rounded-md py-2 px-3 lg:px-6 text-sm text-slate-800 hover:shadow-sm mr-4 ${searchResultsShowing ? `${searchingByCoordinates ? "block"  : "hidden"}`: "" }`} onClick= {handleSearchbyPlaceNameBtn}  > Search by Place Name </button> 
-    <button className= {`${searchingByCoordinates?  "hidden" : "bg-zinc-100 hover:border hover:border-zinc-300 rounded-md py-2  px-3 lg:px-6 md:text-sm text-slate-800 hover:shadow-sm md:w-auto text-xs" }`}  onClick={ShowCheckWeatherBtn}> Search by Coordinates </button>
-    <button className= {`${searchingByCoordinates ? "bg-zinc-100 hover:border hover:border-zinc-300 rounded-md py-2  px-3 lg:px-6 md:text-sm text-slate-800 hover:shadow-sm md:w-auto text-xs" : "hidden"  }`}  onClick={handleSearchbyCoordinatesBtn}> Check Weather </button> 
+  <div className=  {` lg:max-h-12 flex w-full text-sm lg:text-base  ${searchResultsShowing?  "mt-6 md:mt-3 justify-center" : "mt-8 justify-center" }`} > 
+    <button className={`bg-zinc-100 hover:border hover:border-zinc-300 rounded-md py-2  text-sm text-slate-800 hover:shadow-sm mr-4 ${searchResultsShowing ? `${searchingByCoordinates ? "block px-3 md:px-6"  : "hidden"}`: "px-3 lg:px-6" }`} onClick= {handleSearchbyPlaceNameBtn}  > Search by Place Name </button> 
+    <button className= {` ${searchingByCoordinates?  "hidden" : "bg-zinc-100 hover:border hover:border-zinc-300 rounded-md py-2  px-3 lg:px-6 md:text-sm text-slate-800 hover:shadow-sm md:w-auto text-xs" }`}  onClick={ShowCheckWeatherBtn}> Search by Coordinates </button>
+    <button className= {`${searchingByCoordinates ? "bg-zinc-100 hover:border hover:border-zinc-300 rounded-md py-2  px-3 lg:px-6 md:text-sm text-slate-800 hover:shadow-sm md:w-auto text-xs" : "hidden"  }`}   onClick={handleSearchbyCoordinatesBtn}> Check Weather </button> 
   
     
      </div>
