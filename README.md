@@ -51,7 +51,7 @@ The application can also retrieve weather information using geographic coordinat
 
 ---
 
-## Getting Started
+## Run Locally
 
 ### Clone the repository
 
